@@ -5,10 +5,10 @@
     {
         public int PharmacistId { get; set; }
         public int UserId { get; set; }
-        public string LicenseNumber { get; set; }
-        public string PharmacyAddress { get; set; }
+        public string? LicenseNumber { get; set; }
+        public string? PharmacyAddress { get; set; }
 
         // Navigation property
-        public UserDto User { get; set; }
+        public UserDto? User { get; set; }
     }
 }

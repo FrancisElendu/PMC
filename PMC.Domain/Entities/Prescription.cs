@@ -8,13 +8,13 @@
         public int DoctorId { get; set; } // FK to Doctor
         public DateTime DateIssued { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public string Status { get; set; } // Active, Expired, Refilled, Cancelled
+        public string? Status { get; set; } // Active, Expired, Refilled, Cancelled
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
         // Navigation property
-        public virtual Patient Patient { get; set; }
-        public virtual Doctor Doctor { get; set; }
-        public virtual ICollection<PrescriptionItem> PrescriptionItems { get; set; } // 1 Prescription -> N PrescriptionItems
+        public virtual Patient? Patient { get; set; }
+        public virtual Doctor? Doctor { get; set; }
+        public virtual ICollection<PrescriptionItem>? PrescriptionItems { get; set; } // 1 Prescription -> N PrescriptionItems
     }
 }
