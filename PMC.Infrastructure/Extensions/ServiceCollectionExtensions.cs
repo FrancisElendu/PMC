@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PMC.Infrastructure.Persistence;
+using PMC.Infrastructure.Seeder;
 
 namespace PMC.Infrastructure.Extensions
 {
@@ -11,7 +12,7 @@ namespace PMC.Infrastructure.Extensions
         {
             services.AddDbContext<PrescriptionManagementDbContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-            //services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
+            services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
             //services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
         }
     }
