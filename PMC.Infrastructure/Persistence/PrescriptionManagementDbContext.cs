@@ -3,7 +3,8 @@ using PMC.Domain.Entities;
 
 namespace PMC.Infrastructure.Persistence
 {
-    public class PrescriptionManagementDbContext : DbContext
+    //public class PrescriptionManagementDbContext : DbContext
+    internal class PrescriptionManagementDbContext : DbContext
     {
         public PrescriptionManagementDbContext(DbContextOptions<PrescriptionManagementDbContext> options)
             : base(options)
