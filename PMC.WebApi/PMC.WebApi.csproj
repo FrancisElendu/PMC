@@ -19,4 +19,8 @@
     <ProjectReference Include="..\PMC.Infrastructure\PMC.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
