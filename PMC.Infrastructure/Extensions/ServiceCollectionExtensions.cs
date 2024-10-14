@@ -16,7 +16,6 @@ namespace PMC.Infrastructure.Extensions
             services.AddDbContext<PrescriptionManagementDbContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
-            services.AddSingleton<IApiService, ApiService>();
         }
 
         public static void AddApiServices(this IServiceCollection services)
