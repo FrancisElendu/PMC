@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PMC.Domain.Entities;
 using PMC.Infrastructure.Persistence;
+using PMC.Infrastructure.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +11,33 @@ using System.Threading.Tasks;
 
 namespace PMC.Infrastructure.Seeder
 {
-    internal class DatabaseSeeder(PrescriptionManagementDbContext context) : IDatabaseSeeder
+    internal class DatabaseSeeder(PrescriptionManagementDbContext context, ILogger<DatabaseSeeder> logger) : IDatabaseSeeder
     {
         private readonly PrescriptionManagementDbContext _context = context;
+        private readonly ILogger<DatabaseSeeder> _logger = logger;
 
         public async Task SeedAsync()
         {
-            // Apply pending migrations if any
-            if (_context.Database.GetPendingMigrations().Any())
+            try
             {
-                await _context.Database.MigrateAsync();
+                var pendingMigrations = await _context.Database.GetPendingMigrationsAsync();
+                // Apply pending migrations if any
+                if (pendingMigrations.Any())
+                {
+                    _logger.LogInformation($"{pendingMigrations.Count()} pending migrations found. Applying migrations.");
+                    await _context.Database.MigrateAsync();
+                }
+                else
+                {
+                    _logger.LogInformation("No pending migrations found.");
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while migrating the database.");
+                throw;
+            }
+            
 
             // Seed each entity
             await SeedUsersAsync();

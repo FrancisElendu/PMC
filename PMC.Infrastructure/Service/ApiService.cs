@@ -1,5 +1,4 @@
-﻿using Azure;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using PMC.Application.Service;
 using System.Net.Http.Json;
 
@@ -20,7 +19,7 @@ namespace PMC.Infrastructure.Service
         {
             var fullUrl = _httpClient.BaseAddress + url;
             try
-            { 
+            {
                 var response = await _httpClient.GetAsync(fullUrl);
 
                 if (!response.IsSuccessStatusCode)

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PMC.Application.Command.CreateUser;
 using PMC.Application.Dtos;
 using PMC.Domain.Entities;
 
@@ -19,6 +20,25 @@ namespace PMC.Application.Mapper
 
                 // UserDto to User mapping
                 config.CreateMap<UserDto, User>().ReverseMap();
+
+                // User to CreateUserCommand mapping
+                config.CreateMap<User, CreateUserCommand>()
+                    .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                    .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
+                    .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                    .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.PasswordHash))
+                    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+                    .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
+                    .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt));
+
+                // CreateUserCommand to UserDto mapping
+                config.CreateMap<CreateUserCommand, UserDto>()
+                    .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                    .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
+                    .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+                    .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
+                    .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt));
 
                 // Patient to PatientDto mapping
                 config.CreateMap<Patient, PatientDto>()

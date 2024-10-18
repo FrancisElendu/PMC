@@ -20,6 +20,7 @@ namespace PMC.Infrastructure.Persistence
         public DbSet<PrescriptionItem> PrescriptionItems { get; set; }
         public DbSet<Drug> Drugs { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
