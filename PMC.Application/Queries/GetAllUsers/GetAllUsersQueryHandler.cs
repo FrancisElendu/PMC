@@ -11,7 +11,6 @@ namespace PMC.Application.Queries.GetAllUsers
     {
         public async Task<IEnumerable<UserDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var userDtos = new UserDto { };
             logger.LogInformation("Getting all registered users");
             var users = await _repo.GetAllAsync();
             if(users != null && users.Any())

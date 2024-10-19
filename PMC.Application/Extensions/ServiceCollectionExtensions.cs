@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using PMC.Application.Mapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace PMC.Application.Extensions
 {
@@ -17,6 +14,10 @@ namespace PMC.Application.Extensions
 
             IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
             services.AddSingleton(mapper);
+
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
+
+            services.AddValidatorsFromAssembly(applicationAssembly).AddFluentValidationAutoValidation();
 
         }
     }

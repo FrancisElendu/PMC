@@ -1,3 +1,4 @@
+using PMC.Application.Extensions;
 using PMC.Infrastructure.Extensions;
 using PMC.Infrastructure.Seeder;
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApiServices();
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
