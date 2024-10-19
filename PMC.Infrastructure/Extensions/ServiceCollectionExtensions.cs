@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PMC.Application.Service;
+using PMC.Domain.Repositories;
 using PMC.Infrastructure.Persistence;
+using PMC.Infrastructure.Repositories;
 using PMC.Infrastructure.Seeder;
 using PMC.Infrastructure.Service;
 using Polly;
@@ -16,6 +18,7 @@ namespace PMC.Infrastructure.Extensions
             services.AddDbContext<PrescriptionManagementDbContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         public static void AddApiServices(this IServiceCollection services)

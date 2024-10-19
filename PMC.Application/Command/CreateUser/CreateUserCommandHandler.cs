@@ -3,20 +3,25 @@ using PMC.Application.Service;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using PMC.Domain.Entities;
+using PMC.Domain.Repositories;
 
 namespace PMC.Application.Command.CreateUser
 {
-    public class CreateUserCommandHandler(ILogger<CreateUserCommandHandler> logger, IMapper mapper, IApiService apiService) : IRequestHandler<CreateUserCommand, int>
+    public class CreateUserCommandHandler(ILogger<CreateUserCommandHandler> logger, IMapper mapper, IRepository<User> _repo) : IRequestHandler<CreateUserCommand, int>  //IApiService apiService, 
     {
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Creating a new user");
 
             var user = mapper.Map<User>(request);
+            await _repo.AddAsync(user);
 
-            var userCreated = await apiService.PostAsync<User, User>("posts", user);
+            return user.UserId;
 
-            return userCreated.UserId;
+
+            //var userCreated = await apiService.PostAsync<User, User>("posts", user);
+
+            //return userCreated.UserId;
         }
     }
 }
