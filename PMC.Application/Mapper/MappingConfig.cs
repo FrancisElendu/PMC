@@ -31,6 +31,8 @@ namespace PMC.Application.Mapper
                     .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
                     .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt));
 
+                config.CreateMap<CreateUserCommand, User>().ReverseMap();
+
                 // CreateUserCommand to UserDto mapping
                 config.CreateMap<CreateUserCommand, UserDto>()
                     .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))

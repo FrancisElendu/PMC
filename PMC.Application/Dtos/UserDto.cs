@@ -1,4 +1,6 @@
-﻿namespace PMC.Application.Dtos
+﻿using System.Text.Json.Serialization;
+
+namespace PMC.Application.Dtos
 {
     // User DTO
     public class UserDto
@@ -12,11 +14,15 @@
         public DateTime UpdatedAt { get; set; }
 
         // Navigation properties
+        [JsonIgnore]
         public PatientDto? Patient { get; set; }
+        [JsonIgnore]
         public DoctorDto? Doctor { get; set; }
+        [JsonIgnore]
         public PharmacistDto? Pharmacist { get; set; }
 
         // Collection of notifications
+        [JsonIgnore]
         public ICollection<NotificationDto>? Notifications { get; set; }
     }
 }
