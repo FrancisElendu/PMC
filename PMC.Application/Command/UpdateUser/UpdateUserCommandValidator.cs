@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using PMC.Domain.Entities;
+﻿using FluentValidation;
 
-namespace PMC.Application.Command.CreateUser
+namespace PMC.Application.Command.UpdateUser
 {
-    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
         private readonly List<string?> validRoles = ["Admin", "Doctor", "Pharmacist", "Patient"];
-        public CreateUserCommandValidator()
+        public UpdateUserCommandValidator()
         {
             var roles = string.Join(", ", validRoles);
             RuleFor(x => x.Role)

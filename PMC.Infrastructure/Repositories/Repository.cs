@@ -37,6 +37,11 @@ namespace PMC.Infrastructure.Repositories
             return await _dbSet.FindAsync(id);
         }
 
+        public IQueryable<T> Query()
+        {
+            return _dbSet.AsQueryable();
+        }
+
         public async Task RemoveAsync(T entity)
         {
             _dbSet.Remove(entity);
@@ -49,10 +54,10 @@ namespace PMC.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            _dbSet.Update(entity);
-            _context.SaveChanges();
+             _dbSet.Update(entity);
+             await _context.SaveChangesAsync();
         }
     }
 }

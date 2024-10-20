@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace PMC.Domain.Repositories
 {
@@ -16,6 +11,7 @@ namespace PMC.Domain.Repositories
         Task AddRangeAsync(IEnumerable<T> entities);
         Task RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entities);
-        void Update(T entity);
+        Task UpdateAsync(T entity);
+        IQueryable<T> Query();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PMC.Application.Command.CreateUser;
+using PMC.Application.Command.UpdateUser;
 using PMC.Application.Dtos;
 using PMC.Domain.Entities;
 
@@ -41,6 +42,16 @@ namespace PMC.Application.Mapper
                     .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
                     .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
                     .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt));
+
+                // User to UpdateUserCommand mapping
+                config.CreateMap<User, UpdateUserCommand>()
+                    .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                    .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
+                    .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role));
+
+                config.CreateMap<UpdateUserCommand, User>().ReverseMap();
+
 
                 // Patient to PatientDto mapping
                 config.CreateMap<Patient, PatientDto>()
