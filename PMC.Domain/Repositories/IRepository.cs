@@ -12,6 +12,6 @@ namespace PMC.Domain.Repositories
         Task RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entities);
         Task UpdateAsync(T entity);
-        IQueryable<T> Query();
+        //IQueryable<T> Query();
     }
 }

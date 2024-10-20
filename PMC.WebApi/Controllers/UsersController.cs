@@ -37,8 +37,10 @@ namespace PMC.WebApi.Controllers
         public async Task<IActionResult> GetByPredicate(string filter)
         {
             // Sample predicate: modify as per your requirements
-            Expression<Func<UserDto, bool>> predicate = e => e.FirstName.Contains(filter);
-            var user = await mediator.Send(new GetUsersByConditionQuery(predicate));
+            //Expression<Func<UserDto, bool>> predicate = e => e.FirstName.Contains(filter);
+            //var user = await mediator.Send(new GetUsersByConditionQuery1(predicate));
+
+            var user = await mediator.Send(new GetUsersByConditionQuery(filter));
 
             if (user is null)
                 return NotFound();

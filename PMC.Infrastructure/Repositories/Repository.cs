@@ -37,10 +37,10 @@ namespace PMC.Infrastructure.Repositories
             return await _dbSet.FindAsync(id);
         }
 
-        public IQueryable<T> Query()
-        {
-            return _dbSet.AsQueryable();
-        }
+        //public IQueryable<T> Query()
+        //{
+        //    return _dbSet.AsQueryable();
+        //}
 
         public async Task RemoveAsync(T entity)
         {

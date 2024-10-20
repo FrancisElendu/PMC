@@ -9,8 +9,13 @@ using System.Threading.Tasks;
 
 namespace PMC.Application.Queries.GetUsersByCondition
 {
-    public class GetUsersByConditionQuery(Expression<Func<UserDto?, bool>> predicate) : IRequest<IEnumerable<UserDto>>
+    //public class GetUsersByConditionQuery1(Expression<Func<UserDto?, bool>> predicate) : IRequest<IEnumerable<UserDto>>
+    //{
+    //    public Expression<Func<UserDto?, bool>> Predicate { get; } = predicate;
+    //}
+
+    public class GetUsersByConditionQuery(string filter) : IRequest<IEnumerable<UserDto>>
     {
-        public Expression<Func<UserDto?, bool>> Predicate { get; } = predicate;
+        public string Filter { get; } = filter;
     }
 }
