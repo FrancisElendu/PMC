@@ -17,7 +17,7 @@ namespace PMC.Application.Command.UpdateUser
     {
         public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"Updating user with id: {request.UserId}");
+            logger.LogInformation("Updating user with id: {userId} with {@UpdatedUser}", request.UserId, request);
             var user = await _repo.GetByIdAsync(request.UserId);
             if (user is null)
                 return false;

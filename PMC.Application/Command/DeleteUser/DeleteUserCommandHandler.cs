@@ -16,7 +16,7 @@ namespace PMC.Application.Command.DeleteUser
     {
         public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"Deleting user with id : {request.Id}");
+            logger.LogInformation("Deleting user with id : {request.Id}", request.Id);
             var user = await _repo.GetByIdAsync(request.Id );
             if ( user is null )
                 return false;

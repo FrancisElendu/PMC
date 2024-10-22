@@ -38,7 +38,7 @@ namespace PMC.Application.Queries.GetUsersByCondition
     {
         public async Task<IEnumerable<UserDto?>> Handle(GetUsersByConditionQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Getting registered users by predicate");
+            logger.LogInformation("Getting registered users by filtering on the firstname euqals {predicate}", request.Filter);
 
 
             // Build predicate for User entity

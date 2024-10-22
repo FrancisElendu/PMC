@@ -11,7 +11,7 @@ namespace PMC.Application.Queries.GetUserById
     {
         public async Task<UserDto?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Getting registered users by id");
+            logger.LogInformation("Getting registered users by {userId}", request.Id);
             var user = await _repo.GetByIdAsync(request.Id);
             var userDtos = mapper.Map<UserDto>(user);
             return userDtos;

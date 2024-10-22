@@ -15,7 +15,9 @@ namespace PMC.Infrastructure.Extensions
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<PrescriptionManagementDbContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<PrescriptionManagementDbContext>(options => 
+                options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
+                    .EnableSensitiveDataLogging());
 
             services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

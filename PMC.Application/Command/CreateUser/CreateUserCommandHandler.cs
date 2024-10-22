@@ -12,7 +12,7 @@ namespace PMC.Application.Command.CreateUser
     {
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Creating a new user");
+            logger.LogInformation("Creating a new user {@User}", request);
 
             var user = mapper.Map<User>(request);
             await _repo.AddAsync(user);
