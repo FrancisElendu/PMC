@@ -27,23 +27,15 @@ namespace PMC.WebApi.Controllers
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var user = await mediator.Send(new GetUserByIdQuery(id));
-            
-            if(user is null)
-                return NotFound();
+
             return Ok(user);
         }
 
         [HttpGet("filter")]
-        public async Task<IActionResult> GetByPredicate(string filter)
+        public async Task<IActionResult> GetByPredicate(string column, string filter)
         {
-            // Sample predicate: modify as per your requirements
-            //Expression<Func<UserDto, bool>> predicate = e => e.FirstName.Contains(filter);
-            //var user = await mediator.Send(new GetUsersByConditionQuery1(predicate));
+            var user = await mediator.Send(new GetUsersByConditionQuery(column, filter));
 
-            var user = await mediator.Send(new GetUsersByConditionQuery(filter));
-
-            if (user is null)
-                return NotFound();
             return Ok(user);
         }
 
@@ -51,22 +43,17 @@ namespace PMC.WebApi.Controllers
         public async Task<IActionResult> UpdateUser([FromRoute] int id, UpdateUserCommand command)
         {
             command.UserId = id;
-            var isUserUpdated = await mediator.Send(command);
+            await mediator.Send(command);
 
-            if (isUserUpdated)
-                return NoContent();
-
-            return NotFound();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
-            var isDeleted = await mediator.Send(new DeleteUserCommand(id));
+            await mediator.Send(new DeleteUserCommand(id));
 
-            if (isDeleted)
-                return NoContent();
-            return NotFound();
+            return NoContent();
         }
 
         [HttpPost]

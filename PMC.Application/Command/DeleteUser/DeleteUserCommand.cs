@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PMC.Application.Command.DeleteUser
 {
-    public class DeleteUserCommand(int id) : IRequest<bool>
+    public class DeleteUserCommand(int id) : IRequest
     {
         public int Id { get; } = id;
     }

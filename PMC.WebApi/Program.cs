@@ -1,47 +1,63 @@
 using PMC.Application.Extensions;
 using PMC.Infrastructure.Extensions;
 using PMC.Infrastructure.Seeder;
+using PMC.WebApi.Middlewares;
 using Serilog;
-
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddApiServices();
-builder.Services.AddApplication();
 builder.Host.UseSerilog((context, configuration) =>
     configuration
-        //.MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
-        //.MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Information)
-        //.WriteTo.File("Logs/PMC-API- .log", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
-        //.WriteTo.Console(outputTemplate:"[{Timestamp:dd-MM HH:mm:ss} {Level:u3}]|{SourceContext}|{NewLine} {Message:lj}{NewLine}{Exception}")
         .ReadFrom.Configuration(context.Configuration)
 );
 
-var app = builder.Build();
+Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
 
-
-var scope = app.Services.CreateScope();
-var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
-await seeder.SeedAsync();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Information("Starting web host");
+
+    // Add services to the container.
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.AddApiServices();
+    builder.Services.AddApplication();
+
+    builder.Host.UseSerilog();  // Ensure this is attached to the host
+
+    builder.Services.AddScoped<ExceptionHandlingMiddleware>();
+
+    var app = builder.Build();
+
+    var scope = app.Services.CreateScope();
+    var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
+    await seeder.SeedAsync();
+
+    // Register the Exception Handling Middleware
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseAuthorization();
+    app.MapControllers();
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();  // Ensure Serilog logs are flushed on shutdown
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

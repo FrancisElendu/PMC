@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PMC.Application.Command.UpdateUser
 {
-    public class UpdateUserCommand : IRequest<bool>
+    public class UpdateUserCommand : IRequest
     {
         public int UserId { get; set; } // PK
         public string? FirstName { get; set; }
