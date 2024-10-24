@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PMC.Application.Queries.GetAllUsers
 {
-    public class GetAllUsersQuery : IRequest<PagedResult<UserDto>>
+    public class GetAllUsersQuery : IRequest<PagedResult<UserDto>>, IPaginatedQuery
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }

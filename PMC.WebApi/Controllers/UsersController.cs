@@ -22,12 +22,6 @@ namespace PMC.WebApi.Controllers
             var users = await mediator.Send(query);
             return Ok(users);
         }
-        //[HttpGet]
-        //public async Task<IActionResult> GetAll()
-        //{
-        //    var users = await mediator.Send(new GetAllUsersQuery());
-        //    return Ok(users);
-        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
@@ -37,26 +31,10 @@ namespace PMC.WebApi.Controllers
             return Ok(user);
         }
 
-        //[HttpGet("filter")]
-        //public async Task<IActionResult> GetByPredicate([FromQuery] GetUsersByConditionQuery query)
-        //{
-        //    //if (query == null)
-        //    //{
-        //    //    return BadRequest("Invalid query parameters.");
-        //    //}
-
-        //    //_logger.LogInformation($"Received query: Column={query.Column}, Filter={query.Filter}, PageNumber={query.PageNumber}, PageSize={query.PageSize}");
-
-
-        //    var user = await mediator.Send(query);
-
-        //    return Ok(user);
-        //}
-
         [HttpGet("filter")]
-        public async Task<IActionResult> GetByPredicate(string column, string filter, int pageNumber, int pageSize)
+        public async Task<IActionResult> GetByPredicate([FromQuery] GetUsersByConditionQuery query)
         {
-            var user = await mediator.Send(new GetUsersByConditionQuery(column, filter, pageNumber, pageSize));
+            var user = await mediator.Send(query);
 
             return Ok(user);
         }

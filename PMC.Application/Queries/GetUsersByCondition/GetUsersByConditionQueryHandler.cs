@@ -51,7 +51,6 @@ namespace PMC.Application.Queries.GetUsersByCondition
             throw new NotFoundException($"The column '{request.Column} or filter '{request.Filter}' does not exist on the User entity.");
 
             // Map User entities to UserDto
-            //return mapper.Map<IEnumerable<UserDto>>(users);
             var usersDtos = mapper.Map<IEnumerable<UserDto>>(users);
             var result = new PagedResult<UserDto>(usersDtos, totalCount, request.PageSize, request.PageNumber);
             return result;
