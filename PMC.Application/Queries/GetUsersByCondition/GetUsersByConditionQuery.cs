@@ -11,12 +11,14 @@ using System.Threading.Tasks;
 
 namespace PMC.Application.Queries.GetUsersByCondition
 {
-    public class GetUsersByConditionQuery() : IRequest<PagedResult<UserDto>> , IPaginatedQuery  
+    public class GetUsersByConditionQuery() : IRequest<PagedResult<UserDto>> , IPaginatedQuery, ISortableQuery
     {
         public string? Filter { get; set; }
         public string? Column { get; set; } 
         public int PageNumber { get; set; } 
-        public int PageSize { get; set; } 
+        public int PageSize { get; set; }
+        public string SortColumn { get; set; } = "Id"; // Default sorting column
+        public string SortDirection { get; set; } = "asc"; // Default sorting direction
     }
     
 }

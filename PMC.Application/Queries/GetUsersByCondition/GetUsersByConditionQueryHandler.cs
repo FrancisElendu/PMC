@@ -44,7 +44,9 @@ namespace PMC.Application.Queries.GetUsersByCondition
             var predicate = Expression.Lambda<Func<User, bool>>(containsExpression, parameter);
 
             // Query User repository and get users matching the condition
-            var (users, totalCount) = await _repo.FindAsync(predicate, request.PageNumber, request.PageSize);
+            var (users, totalCount) = await _repo.FindAsync(predicate, request.PageNumber, request.PageSize,
+                                                request.SortColumn,
+                                                request.SortDirection);
 
             if (users is null || !users.Any())
                 //return Enumerable.Empty<UserDto>();

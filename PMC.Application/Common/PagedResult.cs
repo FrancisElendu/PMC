@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PMC.Application.Common
+﻿namespace PMC.Application.Common
 {
     public class PagedResult<T>
     {
         public PagedResult(IEnumerable<T> items, int totalCount, int pageSize, int pageNumber)
         {
             Items = items;
-            TotalPages = (int)Math.Ceiling(totalCount/(double)pageSize);
+            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
             TotalItemsCount = totalCount;
-            ItemsFrom = pageSize * (pageNumber-1) + 1;
-            ItemsTo = ItemsFrom + pageSize - 1;  
+            ItemsFrom = pageSize * (pageNumber - 1) + 1;
+            ItemsTo = ItemsFrom + pageSize - 1;
         }
 
         public IEnumerable<T> Items { get; set; }

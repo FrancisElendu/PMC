@@ -13,7 +13,9 @@ namespace PMC.Application.Queries.GetAllUsers
         public async Task<PagedResult<UserDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Getting all registered users");
-            var (users, totalCount) = await _repo.GetAllAsync(request.PageNumber, request.PageSize);
+            var (users, totalCount) = await _repo.GetAllAsync(request.PageNumber, request.PageSize,
+            request.SortColumn,
+            request.SortDirection);
             if(users != null && users.Any())
             {
                 var usersDtos = mapper.Map<IEnumerable<UserDto>>(users);
