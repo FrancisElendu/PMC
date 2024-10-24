@@ -9,12 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 using PMC.Domain.Exceptions;
+using PMC.Application.Common;
 
 namespace PMC.Application.Queries.GetUsersByCondition
 {
-    public class GetUsersByConditionQueryHandler(ILogger<GetUsersByConditionQueryHandler> logger, IMapper mapper, IRepository<User> _repo) : IRequestHandler<GetUsersByConditionQuery, IEnumerable<UserDto?>>
+    public class GetUsersByConditionQueryHandler(ILogger<GetUsersByConditionQueryHandler> logger, IMapper mapper, IRepository<User> _repo) : IRequestHandler<GetUsersByConditionQuery, PagedResult<UserDto>>
     {
-        public async Task<IEnumerable<UserDto?>> Handle(GetUsersByConditionQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<UserDto?>> Handle(GetUsersByConditionQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Getting registered users by filtering on the firstname euqals {predicate}", request.Filter);
 
@@ -43,14 +44,19 @@ namespace PMC.Application.Queries.GetUsersByCondition
             var predicate = Expression.Lambda<Func<User, bool>>(containsExpression, parameter);
 
             // Query User repository and get users matching the condition
-            var users = await _repo.FindAsync(predicate);
+            var (users, totalCount) = await _repo.FindAsync(predicate, request.PageNumber, request.PageSize);
 
             if (users is null || !users.Any())
                 //return Enumerable.Empty<UserDto>();
             throw new NotFoundException($"The column '{request.Column} or filter '{request.Filter}' does not exist on the User entity.");
 
             // Map User entities to UserDto
-            return mapper.Map<IEnumerable<UserDto>>(users);
+            //return mapper.Map<IEnumerable<UserDto>>(users);
+            var usersDtos = mapper.Map<IEnumerable<UserDto>>(users);
+            var result = new PagedResult<UserDto>(usersDtos, totalCount, request.PageSize, request.PageNumber);
+            return result;
+
+
         }
     }
 }

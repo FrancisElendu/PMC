@@ -22,14 +22,30 @@ namespace PMC.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        public async Task<(IEnumerable<T>, int)> FindAsync(Expression<Func<T, bool>> predicate, int pageNumber, int pageSize)
         {
-            return await _dbSet.Where(predicate).ToListAsync();
+            var baseQuery = _dbSet.Where(predicate);
+
+            var totalCount = await baseQuery.CountAsync();
+            
+            var users = await baseQuery
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+            
+            return (users, totalCount);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<(IEnumerable<T>, int)> GetAllAsync(int pageNumber, int pageSize)
         {
-            return await _dbSet.ToListAsync();
+            var totalCount = await _dbSet.CountAsync();
+            
+            var users = await _dbSet
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (users, totalCount);
         }
 
         public async Task<T> GetByIdAsync(int id)
