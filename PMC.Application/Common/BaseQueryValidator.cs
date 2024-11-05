@@ -2,7 +2,7 @@
 
 namespace PMC.Application.Common
 {
-    public abstract class BaseQueryValidator<T> : AbstractValidator<T> where T : IPaginatedQuery, ISortableQuery
+    public abstract class BaseQueryValidator<T> : AbstractValidator<T> where T : IPaginatedQuery, ISortableQuery  
     {
         private readonly int[] _allowedPageSizes = { 5, 10, 15, 20, 30, 50 };
         private readonly string[] _allowedSortColumns = { "Role", "FirstName", "LastName" }; // Example allowed sort columns

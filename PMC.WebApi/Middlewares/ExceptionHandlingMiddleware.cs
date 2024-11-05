@@ -38,7 +38,7 @@ namespace PMC.WebApi.Middlewares
 
                 case BadRequestException _:
                     code = HttpStatusCode.BadRequest;
-                    result = JsonConvert.SerializeObject(new { error = exception.Message });
+                    result = JsonConvert.SerializeObject(new { error = $"Wrong user input: {exception.Message}" });
                     break;
 
                 case InternalServerErrorException _:
