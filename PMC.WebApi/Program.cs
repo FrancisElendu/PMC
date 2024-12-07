@@ -5,6 +5,8 @@ using PMC.WebApi.Middlewares;
 using Serilog;
 using System.Diagnostics;
 
+//TODO: need to improve this 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, configuration) =>
